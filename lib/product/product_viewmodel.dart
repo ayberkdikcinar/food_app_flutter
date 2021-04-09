@@ -4,7 +4,7 @@ import 'package:food/model/meal_detail_model.dart';
 import 'package:food/services/db_service.dart';
 
 class ProductViewModel with ChangeNotifier {
-  FavouritesDatabaseProvider? favouritesDatabaseProvider = FavouritesDatabaseProvider();
+  FavouritesDatabaseProvider? favouritesDatabaseProvider = FavouritesDatabaseProvider.instance;
 
   List<MealDetail?>? _favMealList = [];
   ProductViewModel() {

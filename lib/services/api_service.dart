@@ -79,4 +79,23 @@ class ApiService extends IApiService {
     }
     return Future.error('');
   }
+
+  @override
+  Future<List<MealDetail>> getMealListByArea(String? areaName) async {
+    final mealListPath = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=$areaName';
+    var _url = Uri.parse(mealListPath);
+    var _response = await http.get(_url);
+    final _jsonResponse = jsonDecode(_response.body)['meals'] as List?;
+    if (_jsonResponse != null) {
+      switch (_response.statusCode) {
+        case HttpStatus.ok:
+          var _mealList = _jsonResponse.map<MealDetail>((e) => MealDetail().fromJson(e)).toList();
+          return _mealList;
+
+        default:
+          return [];
+      }
+    }
+    return Future.error('');
+  }
 }

@@ -6,6 +6,17 @@ class FavouritesDatabaseProvider extends BaseSqliteDB<MealDetail> {
   final String _dbName = 'UserFavourite';
   final String _tableName = 'Favourite';
   final int _version = 1;
+
+  static FavouritesDatabaseProvider? _instance;
+  static FavouritesDatabaseProvider? get instance {
+    if (_instance != null) {
+      return _instance;
+    }
+    _instance = FavouritesDatabaseProvider._init();
+    return _instance;
+  }
+
+  FavouritesDatabaseProvider._init();
   @override
   Database? database;
 

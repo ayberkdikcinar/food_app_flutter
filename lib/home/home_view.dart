@@ -50,9 +50,19 @@ class _HomeViewState extends StatefullBase<HomeView> with AutomaticKeepAliveClie
             itemCount: _homeViewModel.areaList.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return SizedBox(
-                width: dynamicWidth(0.4),
-                child: cardForAreas(_homeViewModel.areaList, index),
+              return InkWell(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ProductView(
+                      categoryName: _homeViewModel.areaList[index].strArea,
+                      categOrArea: false,
+                    ),
+                  ));
+                },
+                child: SizedBox(
+                  width: dynamicWidth(0.4),
+                  child: cardForAreas(_homeViewModel.areaList, index),
+                ),
               );
             },
           )),
@@ -78,7 +88,10 @@ class _HomeViewState extends StatefullBase<HomeView> with AutomaticKeepAliveClie
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProductView(categoryName: snapshot[index].strCategory),
+          builder: (context) => ProductView(
+            categoryName: snapshot[index].strCategory,
+            categOrArea: true,
+          ),
         ));
       },
       child: CustomCard(

@@ -7,5 +7,5 @@ abstract class IApiService {
   Future<List<Area>> getAreaList();
   Future<List<MealDetail>> getMealListByCategoryName(String? categoryName);
   Future<List<MealDetail>> getMealDetailById(String? mealId);
-  //Future<List<MealDetail>> getMealListByArea(String? areaName);
+  Future<List<MealDetail>> getMealListByArea(String? areaName);
 }

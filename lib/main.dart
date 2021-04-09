@@ -10,7 +10,7 @@ import 'core/theme/light_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FavouritesDatabaseProvider().open();
+  await FavouritesDatabaseProvider.instance?.open();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => HomeViewModel()),
     ChangeNotifierProvider(create: (context) => ProductViewModel()),

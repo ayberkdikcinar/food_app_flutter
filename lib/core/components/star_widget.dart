@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class StarWidget extends StatefulWidget {
-  StarWidget({Key? key, this.incomeState, required this.onStarTap}) : super(key: key);
+  StarWidget({Key? key, this.initState, required this.onStarTap}) : super(key: key);
 
   final Function(bool val) onStarTap;
-  final incomeState;
+  final initState;
   @override
   _StarWidgetState createState() => _StarWidgetState();
 }
@@ -13,7 +13,7 @@ class _StarWidgetState extends State<StarWidget> {
   bool star_state = false;
   @override
   void initState() {
-    if (widget.incomeState == true) {
+    if (widget.initState == true) {
       star_state = true;
     } else {
       star_state = false;

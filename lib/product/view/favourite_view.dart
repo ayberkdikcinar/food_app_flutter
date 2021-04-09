@@ -73,9 +73,11 @@ class _FavouriteViewState extends StatefullBase<FavouriteView> {
 
   AppBar buildAppBar() {
     return AppBar(
-        title: Text(
-      ApplicationStrings.instance?.favourites ?? '',
-      style: theme.textTheme.headline6!.copyWith(fontWeight: FontWeight.bold),
+        title: Center(
+      child: Text(
+        ApplicationStrings.instance?.favourites ?? '',
+        style: theme.textTheme.headline6!.copyWith(fontWeight: FontWeight.bold),
+      ),
     ));
   }
 }

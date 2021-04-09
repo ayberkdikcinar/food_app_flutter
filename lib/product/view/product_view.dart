@@ -11,14 +11,15 @@ import '../../services/api_service.dart';
 import 'product_detail_view.dart';
 
 class ProductView extends StatefulWidget {
-  ProductView({Key? key, required this.categoryName}) : super(key: key);
+  ProductView({Key? key, required this.categoryName, this.categOrArea}) : super(key: key);
   final categoryName;
+  final categOrArea;
   @override
   _ProductViewState createState() => _ProductViewState();
 }
 
 class _ProductViewState extends StatefullBase<ProductView> with AutomaticKeepAliveClientMixin {
-  IconData icon = Icons.star_border;
+  IconData icon = Icons.star_border; //this was for transmit icon state to navigated page.
 
   @override
   bool get wantKeepAlive => true;
@@ -33,7 +34,7 @@ class _ProductViewState extends StatefullBase<ProductView> with AutomaticKeepAli
 
   FutureBuilder<List<MealDetail>> buildFutureBuilder() {
     return FutureBuilder<List<MealDetail>>(
-      future: ApiService().getMealListByCategoryName(widget.categoryName),
+      future: widget.categOrArea == true ? ApiService().getMealListByCategoryName(widget.categoryName) : ApiService().getMealListByArea(widget.categoryName),
       builder: (context, snapshot) {
         if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -80,19 +81,22 @@ class _ProductViewState extends StatefullBase<ProductView> with AutomaticKeepAli
             return CustomCard(
               icon: StarWidget(
                 onStarTap: (val) async {
+                  //val is the last state of star icon.
                   if (val == false) {
+                    //false means icon is black star, so recent meal is not in the favourites.
                     icon = Icons.star_rounded;
                     await productViewModel.addToFavourite(_recentMeal);
                     ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(text: ApplicationStrings.instance?.hasAdded ?? '', bgColor: theme.hintColor));
                   } else {
+                    /// true state. recent meal has already in the favourites.
                     icon = Icons.star_border;
                     await productViewModel.deleteFromFavourite(_recentMeal.idMeal!);
                     ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(text: ApplicationStrings.instance?.hasDeleted ?? '', bgColor: theme.errorColor));
                   }
                 },
-                incomeState: snapshot.data,
+                initState: snapshot.data,
               ),
-              star: true,
+              star: true, // star true means, card widget should has a star icon
               title: _recentMeal.strMeal,
               imageURL: _recentMeal.strMealThumb,
             );
@@ -108,10 +112,3 @@ class _ProductViewState extends StatefullBase<ProductView> with AutomaticKeepAli
     ));
   }
 }
-
-/* snapshot.data == true
-                  ? Icon(
-                      Icons.star_rounded,
-                      color: theme.hoverColor,
-                    )
-                  : Icon(Icons.star_border),*/
