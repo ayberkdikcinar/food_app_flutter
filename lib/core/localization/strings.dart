@@ -19,4 +19,7 @@ class ApplicationStrings {
   final String youhaveNoFavourite = 'You have no favourite meal yet';
   final String hasAdded = 'Meal has been added to your favourites';
   final String hasDeleted = 'Meal has been deleted from your favourites';
+  final String name = 'Name: ';
+  final String category = 'Category: ';
+  final String description = 'Description: ';
 }

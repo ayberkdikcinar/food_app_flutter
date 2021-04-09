@@ -1,4 +1,4 @@
-import 'package:food/core/base/base_model.dart';
+import '../core/base/base_model.dart';
 
 class Area extends BaseModel {
   String? strArea;

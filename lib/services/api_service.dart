@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:food/services/IApiService.dart';
+import 'IApiService.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/area_model.dart';

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food/core/extension/context_extension.dart';
+import '../../core/extension/context_extension.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/localization/strings.dart';
 import '../../model/meal_detail_model.dart';
-import '../../services/api_service.dart';
+import '../product_viewmodel.dart';
 
 class ProductDetailView extends StatelessWidget {
   const ProductDetailView({Key? key, required this.productId, required this.icon}) : super(key: key);
@@ -19,10 +20,11 @@ class ProductDetailView extends StatelessWidget {
   }
 
   Padding buildPaddingMealDetail(BuildContext context) {
+    final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
     return Padding(
       padding: context.paddingLow,
       child: FutureBuilder<List<MealDetail>>(
-        future: ApiService().getMealDetailById(productId),
+        future: productViewModel.getMealDetailById(productId!),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(
@@ -61,11 +63,13 @@ class ProductDetailView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         emptySpace(),
-        Text('Name: ' + snapshot.data![index].strCategory!, style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.bold)),
+        Text(ApplicationStrings.instance!.name + snapshot.data![index].strCategory!,
+            style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.bold)),
         emptySpace(),
-        Text('Category: ' + snapshot.data![index].strMeal!, style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.bold)),
+        Text(ApplicationStrings.instance!.category + snapshot.data![index].strMeal!,
+            style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.bold)),
         emptySpace(),
-        Text('Description:', style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.bold)),
+        Text(ApplicationStrings.instance!.description, style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.bold)),
         emptySpace(),
         Text(snapshot.data![index].strInstructions!),
       ],

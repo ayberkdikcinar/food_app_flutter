@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:food/model/meal_detail_model.dart';
-import 'package:food/services/db_service.dart';
+import '../model/meal_detail_model.dart';
+import '../services/api_service.dart';
+import '../services/db_service.dart';
 
 class ProductViewModel with ChangeNotifier {
   FavouritesDatabaseProvider? favouritesDatabaseProvider = FavouritesDatabaseProvider.instance;
-
+  final ApiService _apiService = ApiService();
   List<MealDetail?>? _favMealList = [];
   ProductViewModel() {
     favouritesDatabaseProvider!.open();
@@ -37,5 +38,17 @@ class ProductViewModel with ChangeNotifier {
     _favMealList?.add(meal);
     notifyListeners();
     return 1;
+  }
+
+  Future<List<MealDetail>> getMealDetailById(String mealId) async {
+    return await _apiService.getMealDetailById(mealId);
+  }
+
+  Future<List<MealDetail>> getMealListByCategoryName(String categoryName) async {
+    return await _apiService.getMealListByCategoryName(categoryName);
+  }
+
+  Future<List<MealDetail>> getMealListByArea(String areaName) async {
+    return await _apiService.getMealListByArea(areaName);
   }
 }

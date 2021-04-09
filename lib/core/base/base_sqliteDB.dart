@@ -1,5 +1,6 @@
-import 'package:food/core/base/base_model.dart';
 import 'package:sqflite/sqflite.dart';
+
+import 'base_model.dart';
 
 abstract class BaseSqliteDB<T extends BaseModel> {
   Future<void> open();

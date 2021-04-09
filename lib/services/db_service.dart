@@ -1,5 +1,5 @@
-import 'package:food/core/base/base_sqliteDB.dart';
-import 'package:food/model/meal_detail_model.dart';
+import '../core/base/base_sqliteDB.dart';
+import '../model/meal_detail_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FavouritesDatabaseProvider extends BaseSqliteDB<MealDetail> {

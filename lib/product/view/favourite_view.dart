@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:food/core/base/base_statefull.dart';
-import 'package:food/core/components/custom_card.dart';
-import 'package:food/core/extension/context_extension.dart';
-import 'package:food/core/localization/strings.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/base/base_statefull.dart';
+import '../../core/components/custom_card.dart';
+import '../../core/extension/context_extension.dart';
+import '../../core/localization/strings.dart';
+import '../../model/meal_detail_model.dart';
 import '../product_viewmodel.dart';
+import 'product_detail_view.dart';
 
 class FavouriteView extends StatefulWidget {
   FavouriteView({Key? key}) : super(key: key);
@@ -50,25 +52,38 @@ class _FavouriteViewState extends StatefullBase<FavouriteView> {
           var _currentMeal = productViewModel.favMealList?[index];
           return Padding(
             padding: context.paddingLow,
-            child: Container(
-              height: dynamicHeight(0.35),
-              child: CustomCard(
-                icon: IconButton(
-                  icon: Icon(Icons.star_rounded),
-                  color: theme.hoverColor,
-                  onPressed: () {
-                    if (_currentMeal != null) {
-                      productViewModel.deleteFromFavourite(_currentMeal.idMeal!);
-                    }
-                  },
-                ),
-                imageURL: _currentMeal?.strMealThumb,
-                star: true,
-                title: _currentMeal?.strMeal,
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ProductDetailView(
+                    /// pressed meal id to pass next page.
+                    productId: _currentMeal?.idMeal,
+                    icon: Icons.star_rounded, //this was for transmit icon state to navigated page.
+                  ),
+                ));
+              },
+              child: Container(
+                height: dynamicHeight(0.35),
+                child: buildCustomCard(_currentMeal!, productViewModel),
               ),
             ),
           );
         });
+  }
+
+  CustomCard buildCustomCard(MealDetail _currentMeal, ProductViewModel productViewModel) {
+    return CustomCard(
+      icon: IconButton(
+        icon: Icon(Icons.star_rounded),
+        color: theme.hoverColor,
+        onPressed: () {
+          productViewModel.deleteFromFavourite(_currentMeal.idMeal!);
+        },
+      ),
+      imageURL: _currentMeal.strMealThumb,
+      star: true,
+      title: _currentMeal.strMeal,
+    );
   }
 
   AppBar buildAppBar() {

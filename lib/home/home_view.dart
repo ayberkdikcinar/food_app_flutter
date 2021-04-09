@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:food/core/base/base_statefull.dart';
-import 'package:food/core/extension/context_extension.dart';
-import 'package:food/home/home_viewmodel.dart';
 import 'package:provider/provider.dart';
+
+import '../core/base/base_statefull.dart';
 import '../core/components/custom_card.dart';
+import '../core/extension/context_extension.dart';
 import '../core/localization/strings.dart';
 import '../model/area_model.dart';
 import '../model/category_model.dart';
 import '../product/view/product_view.dart';
+import 'home_viewmodel.dart';
 
 class HomeView extends StatefulWidget {
   HomeView({Key? key}) : super(key: key);
@@ -54,7 +55,7 @@ class _HomeViewState extends StatefullBase<HomeView> with AutomaticKeepAliveClie
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ProductView(
-                      categoryName: _homeViewModel.areaList[index].strArea,
+                      nameValue: _homeViewModel.areaList[index].strArea,
                       categOrArea: false,
                     ),
                   ));
@@ -89,7 +90,7 @@ class _HomeViewState extends StatefullBase<HomeView> with AutomaticKeepAliveClie
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ProductView(
-            categoryName: snapshot[index].strCategory,
+            nameValue: snapshot[index].strCategory,
             categOrArea: true,
           ),
         ));

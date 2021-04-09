@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'default_tab_viewmodel.dart';
-import '../product/view/favourite_view.dart';
 import '../home/home_view.dart';
+import '../product/view/favourite_view.dart';
+import 'default_tab_viewmodel.dart';
 
 class DefaulTabView extends StatefulWidget {
   const DefaulTabView({Key? key}) : super(key: key);

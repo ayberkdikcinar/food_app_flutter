@@ -1,4 +1,4 @@
-import 'package:food/core/base/base_model.dart';
+import '../core/base/base_model.dart';
 
 class MealDetail extends BaseModel {
   String? idMeal;
@@ -227,6 +227,7 @@ class MealDetail extends BaseModel {
         dateModified: json['dateModified']);
   }
 
+  ///These methods used for saving and retreiving data from database. I thought these fields is enough for favourite page.
   Map<String, dynamic> toJsonForDB() {
     final data = <String, dynamic>{};
     data['idMeal'] = idMeal as String;

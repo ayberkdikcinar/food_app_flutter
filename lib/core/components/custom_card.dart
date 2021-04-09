@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/core/extension/context_extension.dart';
+import '../extension/context_extension.dart';
 
 class CustomCard extends StatelessWidget {
   final String? title;

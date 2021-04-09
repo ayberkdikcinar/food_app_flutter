@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:food/model/area_model.dart';
-import 'package:food/model/category_model.dart';
-import 'package:food/services/api_service.dart';
+
+import '../model/area_model.dart';
+import '../model/category_model.dart';
+import '../services/api_service.dart';
 
 enum ViewState { Idle, Busy }
 

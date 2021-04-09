@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:food/core/base/base_statefull.dart';
-import 'package:food/core/components/star_widget.dart';
-import 'package:food/core/extension/context_extension.dart';
-import 'package:food/product/product_viewmodel.dart';
+import '../../core/base/base_statefull.dart';
+import '../../core/components/star_widget.dart';
+import '../../core/extension/context_extension.dart';
+import '../product_viewmodel.dart';
 import 'package:provider/provider.dart';
 import '../../core/components/custom_card.dart';
 import '../../core/localization/strings.dart';
 import '../../model/meal_detail_model.dart';
-import '../../services/api_service.dart';
 import 'product_detail_view.dart';
 
 class ProductView extends StatefulWidget {
-  ProductView({Key? key, required this.categoryName, this.categOrArea}) : super(key: key);
-  final categoryName;
+  ProductView({Key? key, required this.nameValue, this.categOrArea}) : super(key: key);
+  final nameValue;
   final categOrArea;
   @override
   _ProductViewState createState() => _ProductViewState();
@@ -33,8 +32,9 @@ class _ProductViewState extends StatefullBase<ProductView> with AutomaticKeepAli
   }
 
   FutureBuilder<List<MealDetail>> buildFutureBuilder() {
+    final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
     return FutureBuilder<List<MealDetail>>(
-      future: widget.categOrArea == true ? ApiService().getMealListByCategoryName(widget.categoryName) : ApiService().getMealListByArea(widget.categoryName),
+      future: widget.categOrArea == true ? productViewModel.getMealListByCategoryName(widget.nameValue) : productViewModel.getMealListByArea(widget.nameValue),
       builder: (context, snapshot) {
         if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -59,14 +59,15 @@ class _ProductViewState extends StatefullBase<ProductView> with AutomaticKeepAli
   }
 
   InkWell buildInkWell(MealDetail _recentMeal) {
-    var productViewModel = Provider.of<ProductViewModel>(context, listen: false);
+    final productViewModel = Provider.of<ProductViewModel>(context, listen: false);
 
     return InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ProductDetailView(
+              /// pressed meal id to pass next page.
               productId: _recentMeal.idMeal,
-              icon: icon,
+              icon: icon, //this was for transmit icon state to navigated page.
             ),
           ));
         },
@@ -107,7 +108,7 @@ class _ProductViewState extends StatefullBase<ProductView> with AutomaticKeepAli
   AppBar buildAppBar() {
     return AppBar(
         title: Text(
-      widget.categoryName,
+      widget.nameValue,
       style: theme.textTheme.headline6!.copyWith(fontWeight: FontWeight.bold),
     ));
   }
